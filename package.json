@@ -1,0 +1,23 @@
+{
+  "name": "gkv",
+  "version": "1.0.0",
+  "description": "Proyek membuat analisis data dengan bentuk grafik, bar, dan donut",
+  "main": "tugas.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SandyRYH/GKV.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/SandyRYH/GKV/issues"
+  },
+  "homepage": "https://github.com/SandyRYH/GKV#readme",
+  "dependencies": {
+    "canvas-sketch": "^0.7.5"
+  }
+}
