@@ -1,7 +1,7 @@
 const canvasSketch = require('canvas-sketch');
 
 const settings = {
-  dimensions: [ 2048, 2048 ]
+  dimensions: [ 4096, 4096 ]
 };
 
 const sketch = () => {
