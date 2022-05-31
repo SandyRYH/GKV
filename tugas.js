@@ -1,7 +1,7 @@
 const canvasSketch = require('canvas-sketch');
 
 const settings = {
-  dimensions: [2800, 1000]
+  dimensions: [2800, 2000]
 };
 
 const total_death = ["10", "20", "30", "40", "50", "60", "70", "80", "90"];
@@ -19,6 +19,7 @@ var data = [
   ["Nama Penyebab", "Bencana Non Alam", 2010, 2000],
   ["Nama Penyebab", "Bencana Sosial", 2010, 3000],
   ["Nama Penyebab", "Bencana Alam", 2011, 5000],
+  ["Nama Penyebab", "Bencana Alam", 2012, 15000],
   ["Nama Penyebab", "Bencana Alam", 2011, 5000],
   ["Nama Penyebab", "Bencana Non Alam", 2013, 50000],
   ["Nama Penyebab", "Bencana Sosial", 2012, 15000],
@@ -31,6 +32,13 @@ var data = [
   ["Nama Penyebab", "Bencana Non Alam", 2015, 18000],
   ["Nama Penyebab", "Bencana Sosial", 2012, 25000],
 ];
+var data_top = [
+  ["Ketiban Duren", 87025],
+  ["Kesandung semut", 69345],
+  ["Ditinggal Ayank", 56341],
+  ["Diterror Tugas", 30981],
+  ["Hilang Harapan", 15908]
+];
 
 //ukuran bg chart
 const maks_X = 1000;
@@ -39,18 +47,27 @@ const maks_Y = 800;
 const line_X = 1000;
 const line_Y = 800;
 
+const top_Alam_X = 1000;
+const top_Alam_Y = 800;
+
 //jarak chart dengan bg belakang
-const bot_gap = 110;
+const bot_gap = 1110;
 const left_gap = 120;
 
-const line_bot_gap = 110;
+const line_bot_gap = 1110;
 const line_left_gap = 1520;
+
+const top_Alam_bot_gap = 110;
+const top_Alam_left_gap = 220;
 
 const grid_gap_X = maks_X / (tahun.length + 1);
 const grid_gap_Y = maks_Y / (total_death.length + 1);
 
 const line_grid_gap_X = line_X / (tahun.length + 1);
 const line_grid_gap_Y = line_Y / (total_death.length + 1);
+
+const top_Alam_grid_gap_X = top_Alam_X / (total_death.length + 1);
+const top_Alam_grid_gap_Y = top_Alam_Y / (data_top.length + 1);
 
 //nyimpen data[jumlah kematian] di tahun
 for(var i = 0; i < data.length; i++){
@@ -141,14 +158,17 @@ const sketch = () => {
     context.save();
     context.fillStyle = 'black';
     context.font = "20px Arial";
+    context.textAlign = 'right';
     for(var n = 0; n < total_death.length; n++){
-      context.fillText(total_death[n], left_gap-30, height-bot_gap+8 - (n + 1)*grid_gap_Y);
+      context.fillText(total_death[n], left_gap-10, height-bot_gap+8 - (n + 1)*grid_gap_Y);
     }
+    context.textAlign = 'center';
     for(var m = 0; m < tahun.length; m++){
-      context.fillText(tahun[m][0], left_gap-20 + (m + 1)*grid_gap_X, height-bot_gap+30);
+      context.fillText(tahun[m][0], left_gap + (m + 1)*grid_gap_X, height-bot_gap+30);
     }
     context.restore();
 
+    //move 0, 0 position
     context.translate(left_gap, height-bot_gap);
     context.scale(1, -1);
 
@@ -176,6 +196,7 @@ const sketch = () => {
 
     //bikin grid
     context.beginPath();  //garis di sumbu 0 x & y
+    context.lineWidth = 1;
     context.moveTo(0, 0);
     context.lineTo(0, maks_Y);
     context.moveTo(0, 0);
@@ -194,7 +215,7 @@ const sketch = () => {
     context.stroke();
 
     //bikin bar chart
-    const bar_width = grid_gap_X / 4;
+    var bar_width = grid_gap_X / 4;
 
     for(var i = 0; i < tahun.length; i++){
       context.save();
@@ -242,18 +263,85 @@ const sketch = () => {
     context.restore();
 
     //reset position
+    context.translate(-left_gap, height-bot_gap);
+    context.scale(1, -1);
+
+   
+  //Top 5 Bencana Alam Side bar chart
+    //create label di sumbu x
+    context.save();
+    context.fillStyle = 'black';
+    context.font = "20px Arial";
+    context.textAlign = 'right';
+    for(var n = 0; n < data_top.length; n++){
+      context.fillText(data_top[n][0], top_Alam_left_gap-25, height-top_Alam_bot_gap+8 - (data_top.length - n)*top_Alam_grid_gap_Y);
+    }
+    context.textAlign = 'center';
+    for(var m = 0; m < total_death.length; m++){
+      context.fillText(total_death[m], top_Alam_left_gap + (m + 1)*top_Alam_grid_gap_X, height-top_Alam_bot_gap+30);
+    }
     context.restore();
+
+    //move 0, 0 position
+    context.translate(top_Alam_left_gap, height-top_Alam_bot_gap);
+    context.scale(1, -1);
+
+    //keterangan sumbu x
+    context.save();
+    context.scale(1, -1);
+    context.translate(top_Alam_X / 2, 0);
+    context.rotate(-0 * Math.PI / 180);
+    context.fillStyle = 'black';
+    context.font = "30px Arial";
+    context.textAlign = 'center';
+    context.fillText("Jumlah kematian (ribu)", 0, 75);
+    context.restore();
+
+    //bikin grid
+    context.beginPath();  //garis di sumbu 0 x & y
+    context.lineWidth = 1;
+    context.moveTo(0, 0);
+    context.lineTo(0, top_Alam_Y);
+    context.moveTo(0, 0);
+    context.lineTo(top_Alam_X, 0);
+    context.stroke();
+
+    context.lineWidth = 0.1;  //grid kotak kotak
+    for(var  g = top_Alam_grid_gap_X; g < top_Alam_X; g += top_Alam_grid_gap_X){
+      context.moveTo(g, 0);
+      context.lineTo(g, top_Alam_Y);
+    }
+    for(var f = top_Alam_grid_gap_Y; f < top_Alam_Y; f += top_Alam_grid_gap_Y){
+      context.moveTo(0, f);
+      context.lineTo(top_Alam_X, f);
+    }
+    context.stroke();
+
+    //bikin side bar chart
+    for(var i = 0; i < data_top.length; i++){
+      context.save();
+      context.fillStyle = "Red"; 
+      context.fillRect(0, top_Alam_grid_gap_Y * (data_top.length - i) - top_Alam_grid_gap_Y/4, data_top[i][1] / maks_death * top_Alam_X, top_Alam_grid_gap_Y/2);
+      context.restore();
+    }
+
+    //reset position
+    context.translate(-top_Alam_left_gap, height-top_Alam_bot_gap);
+    context.scale(1, -1);
+
 
   //line chart
     //create label di sumbu x dan y
     context.save();
     context.fillStyle = 'black';
     context.font = "20px Arial";
+    context.textAlign = 'right';
     for(var n = 0; n < total_death.length; n++){
-      context.fillText(total_death[n], line_left_gap-30, height-line_bot_gap+8 - (n + 1)*line_grid_gap_Y);
+      context.fillText(total_death[n], line_left_gap-10, height-line_bot_gap+8 - (n + 1)*line_grid_gap_Y);
     }
+    context.textAlign = 'center';
     for(var m = 0; m < tahun.length; m++){
-      context.fillText(tahun[m][0], line_left_gap-20 + (m + 1)*line_grid_gap_X, height-line_bot_gap+30);
+      context.fillText(tahun[m][0], line_left_gap + (m + 1)*line_grid_gap_X, height-line_bot_gap+30);
     }
     context.restore();
 
@@ -284,6 +372,7 @@ const sketch = () => {
 
     //bikin grid
     context.beginPath();  //garis di sumbu 0 x & y
+    context.lineWidth = 1;
     context.moveTo(0, 0);
     context.lineTo(0, line_Y);
     context.moveTo(0, 0);
