@@ -4,8 +4,10 @@ const settings = {
   dimensions: [4200, 2000]
 };
 
-const total_death = ["10", "20", "30", "40", "50", "60", "70", "80", "90"];
-const maks_death = 100000;
+const total_death = ["50", "150", "450", "1350", "4050", "12150", "36450", "109350"];
+const maks_death = 328050;
+const min_death = 50;
+
 const tahun = [
   ["2010 - 2011", 1478, 51776, 67],
   ["2012 - 2013", 174, 4451, 65], 
@@ -57,10 +59,10 @@ const top2_Alam_Y = 800;
 
 //jarak chart dengan bg belakang
 const bot_gap = 1110;
-const left_gap = 120;
+const left_gap = 160;
 
 const line_bot_gap = 1110;
-const line_left_gap = 1520;
+const line_left_gap = 1560;
 
 const top_Alam_bot_gap = 110;
 const top_Alam_left_gap = 220;
@@ -323,7 +325,7 @@ const sketch = () => {
     context.fillStyle = 'black';
     context.font = "30px Arial";
     context.textAlign = 'center';
-    context.fillText("Jumlah kematian", 0, -55);
+    context.fillText("Jumlah kematian", 0, -95);
     context.restore();
 
     //keterangan sumbu x
@@ -362,26 +364,31 @@ const sketch = () => {
     
     for(var i = 0; i < tahun.length; i++){
 
-      /*
-      if(tahun[i][1] < min_death){
-        var death_data = (tahun[i][1] /);
-      }
-
-      (Math.log3(death_data/min_death) + 1) / (total_death.lenght + 1) * maks_X;
-      */     
+      if(tahun[i][1] < min_death)
+        var death_data = (tahun[i][1] / (min_death / 2) + 1) * min_death / 3;
+      else
+        var death_data = tahun[i][1];
       context.save();
       context.fillStyle = gradV1; //Bencana Alam
-      context.fillRect(bar_width/2 - bar_width*2 + (grid_gap_X * (i + 1)), 0, bar_width, tahun[i][1] / maks_death * maks_Y);
+      context.fillRect(bar_width/2 - bar_width*2 + (grid_gap_X * (i + 1)), 0, bar_width, ((Math.log(death_data/min_death)/Math.log(3)) + 1) / (total_death.length + 1)* maks_Y);
       context.restore();
 
+      if(tahun[i][2] < min_death)
+        var death_data = (tahun[i][2] / (min_death / 2) + 1) * min_death / 3;
+      else
+        var death_data = tahun[i][2];
       context.save();
       context.fillStyle = gradV2; //Bencana Non Alam
-      context.fillRect(bar_width/2 - bar_width + (grid_gap_X * (i + 1)), 0, bar_width, tahun[i][2] / maks_death * maks_Y);
+      context.fillRect(bar_width/2 - bar_width + (grid_gap_X * (i + 1)), 0, bar_width, ((Math.log(death_data/min_death)/Math.log(3)) + 1) / (total_death.length + 1)* maks_Y);
       context.restore();
 
+      if(tahun[i][3] < min_death)
+        var death_data = ((tahun[i][3] / (min_death / 2)) + 1) * min_death / 3;
+      else
+        var death_data = tahun[i][3];
       context.save();
       context.fillStyle = gradV3; //Bencana Sosial
-      context.fillRect(bar_width/2 + (grid_gap_X * (i + 1)), 0, bar_width, tahun[i][3] / maks_death * maks_Y);
+      context.fillRect(bar_width/2 + (grid_gap_X * (i + 1)), 0, bar_width, ((Math.log(death_data/min_death)/Math.log(3)) + 1) / (total_death.length + 1)* maks_Y);
       context.restore();
     }
     
@@ -418,7 +425,7 @@ const sketch = () => {
     context.scale(1, -1);
   }
   
-   function topchart0(){
+  function topchart0(){
 //Top 5 Bencana Alam Side bar chart
     //create label di sumbu x
     context.save();
@@ -446,7 +453,7 @@ const sketch = () => {
     context.fillStyle = 'black';
     context.font = "30px Arial";
     context.textAlign = 'center';
-    context.fillText("Jumlah kematian (ribu)", 0, 75);
+    context.fillText("Jumlah kematian", 0, 75);
     context.restore();
 
     //bikin grid
@@ -471,147 +478,159 @@ const sketch = () => {
 
     //bikin side bar chart
     for(var i = 0; i < data_top.length; i++){
+      if(data_top[i][1] < min_death)
+        var death_data = (data_top[i][1] / (min_death / 2) + 1) * min_death / 3;
+      else
+        var death_data = data_top[i][1];
       context.save();
       context.fillStyle = gradH1; 
-      context.fillRect(0, top_Alam_grid_gap_Y * (data_top.length - i) - top_Alam_grid_gap_Y/4, data_top[i][1] / maks_death * top_Alam_X, top_Alam_grid_gap_Y/2);
+      context.fillRect(0, top_Alam_grid_gap_Y * (data_top.length - i) - top_Alam_grid_gap_Y/4, ((Math.log(death_data/min_death)/Math.log(3)) + 1) / (total_death.length + 1) * top_Alam_X, top_Alam_grid_gap_Y/2);
       context.restore();
     }
 
     //reset position
     context.translate(-top_Alam_left_gap, height-top_Alam_bot_gap);
     context.scale(1, -1);
-   }
+  }
 
-       function topchart1(){
-        //Top 5 Bencana Alam Side bar chart
-            //create label di sumbu x
-            context.save();
-            context.fillStyle = 'black';
-            context.font = "20px Arial";
-            context.textAlign = 'right';
-            for(var n = 0; n < data_top1.length; n++){
-              context.fillText(data_top1[n][0], top1_Alam_left_gap-25, height-top1_Alam_bot_gap+8 - (data_top.length - n)*top1_Alam_grid_gap_Y);
-            }
-            context.textAlign = 'center';
-            for(var m = 0; m < total_death.length; m++){
-              context.fillText(total_death[m], top1_Alam_left_gap + (m + 1)*top1_Alam_grid_gap_X, height-top1_Alam_bot_gap+30);
-            }
-            context.restore();
-        
-            //move 0, 0 position
-            context.translate(top1_Alam_left_gap, height-top1_Alam_bot_gap);
-            context.scale(1, -1);
-        
-            //keterangan sumbu x
-            context.save();
-            context.scale(1, -1);
-            context.translate(top1_Alam_X / 2, 0);
-            context.rotate(-0 * Math.PI / 180);
-            context.fillStyle = 'black';
-            context.font = "30px Arial";
-            context.textAlign = 'center';
-            context.fillText("Jumlah kematian (ribu)", 0, 75);
-            context.restore();
-        
-            //bikin grid
-            context.beginPath();  //garis di sumbu 0 x & y
-            context.lineWidth = 1;
-            context.moveTo(0, 0);
-            context.lineTo(0, top1_Alam_Y);
-            context.moveTo(0, 0);
-            context.lineTo(top1_Alam_X, 0);
-            context.stroke();
-        
-            context.lineWidth = 0.1;  //grid kotak kotak
-            for(var  g = top1_Alam_grid_gap_X; g < top1_Alam_X; g += top1_Alam_grid_gap_X){
-              context.moveTo(g, 0);
-              context.lineTo(g, top1_Alam_Y);
-            }
-            for(var f = top1_Alam_grid_gap_Y; f < top1_Alam_Y; f += top1_Alam_grid_gap_Y){
-              context.moveTo(0, f);
-              context.lineTo(top1_Alam_X, f);
-            }
-            context.stroke();
-        
-            //bikin side bar chart
-            for(var i = 0; i < data_top1.length; i++){
-              context.save();
-              context.fillStyle = gradH2; 
-              context.fillRect(0, top1_Alam_grid_gap_Y * (data_top1.length - i) - top1_Alam_grid_gap_Y/4, data_top1[i][1] / maks_death * top1_Alam_X, top1_Alam_grid_gap_Y/2);
-              context.restore();
-            }
-        
-            //reset position
-            context.translate(-top1_Alam_left_gap, height-top1_Alam_bot_gap);
-            context.scale(1, -1);
-           }
+  function topchart1(){
+//Top 5 Bencana Alam Side bar chart
+    //create label di sumbu x
+    context.save();
+    context.fillStyle = 'black';
+    context.font = "20px Arial";
+    context.textAlign = 'right';
+    for(var n = 0; n < data_top1.length; n++){
+      context.fillText(data_top1[n][0], top1_Alam_left_gap-25, height-top1_Alam_bot_gap+8 - (data_top.length - n)*top1_Alam_grid_gap_Y);
+    }
+    context.textAlign = 'center';
+    for(var m = 0; m < total_death.length; m++){
+      context.fillText(total_death[m], top1_Alam_left_gap + (m + 1)*top1_Alam_grid_gap_X, height-top1_Alam_bot_gap+30);
+    }
+    context.restore();
 
-    function topchart2(){
-    //Top 5 Bencana Alam Side bar chart
-        //create label di sumbu x
-        context.save();
-        context.fillStyle = 'black';
-        context.font = "20px Arial";
-        context.textAlign = 'right';
-        for(var n = 0; n < data_top2.length; n++){
-          context.fillText(data_top2[n][0], top2_Alam_left_gap-25, height-top2_Alam_bot_gap+8 - (data_top2.length - n)*top2_Alam_grid_gap_Y);
-        }
-        context.textAlign = 'center';
-        for(var m = 0; m < total_death.length; m++){
-          context.fillText(total_death[m], top2_Alam_left_gap + (m + 1)*top2_Alam_grid_gap_X, height-top2_Alam_bot_gap+30);
-        }
-        context.restore();
-    
-        //move 0, 0 position
-        context.translate(top2_Alam_left_gap, height-top2_Alam_bot_gap);
-        context.scale(1, -1);
-    
-        //keterangan sumbu x
-        context.save();
-        context.scale(1, -1);
-        context.translate(top2_Alam_X / 2, 0);
-        context.rotate(-0 * Math.PI / 180);
-        context.fillStyle = 'black';
-        context.font = "30px Arial";
-        context.textAlign = 'center';
-        context.fillText("Jumlah kematian (ribu)", 0, 75);
-        context.restore();
-    
-        //bikin grid
-        context.beginPath();  //garis di sumbu 0 x & y
-        context.lineWidth = 1;
-        context.moveTo(0, 0);
-        context.lineTo(0, top2_Alam_Y);
-        context.moveTo(0, 0);
-        context.lineTo(top2_Alam_X, 0);
-        context.stroke();
-    
-        context.lineWidth = 0.1;  //grid kotak kotak
-        for(var  g = top2_Alam_grid_gap_X; g < top2_Alam_X; g += top2_Alam_grid_gap_X){
-          context.moveTo(g, 0);
-          context.lineTo(g, top2_Alam_Y);
-        }
-        for(var f = top2_Alam_grid_gap_Y; f < top2_Alam_Y; f += top2_Alam_grid_gap_Y){
-          context.moveTo(0, f);
-          context.lineTo(top2_Alam_X, f);
-        }
-        context.stroke();
-    
-        //bikin side bar chart
-        for(var i = 0; i < data_top2.length; i++){
-          context.save();
-          context.fillStyle = gradH3; 
-          context.fillRect(0, top2_Alam_grid_gap_Y * (data_top2.length - i) - top2_Alam_grid_gap_Y/4, data_top2[i][1] / maks_death * top2_Alam_X, top2_Alam_grid_gap_Y/2);
-          context.restore();
-        }
-    
-        //reset position
-        context.translate(-top2_Alam_left_gap, height-top2_Alam_bot_gap);
-        context.scale(1, -1);
-       }
+    //move 0, 0 position
+    context.translate(top1_Alam_left_gap, height-top1_Alam_bot_gap);
+    context.scale(1, -1);
+
+    //keterangan sumbu x
+    context.save();
+    context.scale(1, -1);
+    context.translate(top1_Alam_X / 2, 0);
+    context.rotate(-0 * Math.PI / 180);
+    context.fillStyle = 'black';
+    context.font = "30px Arial";
+    context.textAlign = 'center';
+    context.fillText("Jumlah kematian", 0, 75);
+    context.restore();
+
+    //bikin grid
+    context.beginPath();  //garis di sumbu 0 x & y
+    context.lineWidth = 1;
+    context.moveTo(0, 0);
+    context.lineTo(0, top1_Alam_Y);
+    context.moveTo(0, 0);
+    context.lineTo(top1_Alam_X, 0);
+    context.stroke();
+
+    context.lineWidth = 0.1;  //grid kotak kotak
+    for(var  g = top1_Alam_grid_gap_X; g < top1_Alam_X; g += top1_Alam_grid_gap_X){
+      context.moveTo(g, 0);
+      context.lineTo(g, top1_Alam_Y);
+    }
+    for(var f = top1_Alam_grid_gap_Y; f < top1_Alam_Y; f += top1_Alam_grid_gap_Y){
+      context.moveTo(0, f);
+      context.lineTo(top1_Alam_X, f);
+    }
+    context.stroke();
+
+    //bikin side bar chart
+    for(var i = 0; i < data_top1.length; i++){
+      if(data_top[i][1] < min_death)
+        var death_data = (data_top1[i][1] / (min_death / 2) + 1) * min_death / 3;
+      else
+        var death_data = data_top1[i][1];
+      context.save();
+      context.fillStyle = gradH2; 
+      context.fillRect(0, top1_Alam_grid_gap_Y * (data_top1.length - i) - top1_Alam_grid_gap_Y/4, ((Math.log(death_data/min_death)/Math.log(3)) + 1) / (total_death.length + 1) * top1_Alam_X, top1_Alam_grid_gap_Y/2);
+      context.restore();
+    }
+
+    //reset position
+    context.translate(-top1_Alam_left_gap, height-top1_Alam_bot_gap);
+    context.scale(1, -1);
+  }
+
+  function topchart2(){
+//Top 5 Bencana Alam Side bar chart
+    //create label di sumbu x
+    context.save();
+    context.fillStyle = 'black';
+    context.font = "20px Arial";
+    context.textAlign = 'right';
+    for(var n = 0; n < data_top2.length; n++){
+      context.fillText(data_top2[n][0], top2_Alam_left_gap-25, height-top2_Alam_bot_gap+8 - (data_top2.length - n)*top2_Alam_grid_gap_Y);
+    }
+    context.textAlign = 'center';
+    for(var m = 0; m < total_death.length; m++){
+      context.fillText(total_death[m], top2_Alam_left_gap + (m + 1)*top2_Alam_grid_gap_X, height-top2_Alam_bot_gap+30);
+    }
+    context.restore();
+
+    //move 0, 0 position
+    context.translate(top2_Alam_left_gap, height-top2_Alam_bot_gap);
+    context.scale(1, -1);
+
+    //keterangan sumbu x
+    context.save();
+    context.scale(1, -1);
+    context.translate(top2_Alam_X / 2, 0);
+    context.rotate(-0 * Math.PI / 180);
+    context.fillStyle = 'black';
+    context.font = "30px Arial";
+    context.textAlign = 'center';
+    context.fillText("Jumlah kematian", 0, 75);
+    context.restore();
+
+    //bikin grid
+    context.beginPath();  //garis di sumbu 0 x & y
+    context.lineWidth = 1;
+    context.moveTo(0, 0);
+    context.lineTo(0, top2_Alam_Y);
+    context.moveTo(0, 0);
+    context.lineTo(top2_Alam_X, 0);
+    context.stroke();
+
+    context.lineWidth = 0.1;  //grid kotak kotak
+    for(var  g = top2_Alam_grid_gap_X; g < top2_Alam_X; g += top2_Alam_grid_gap_X){
+      context.moveTo(g, 0);
+      context.lineTo(g, top2_Alam_Y);
+    }
+    for(var f = top2_Alam_grid_gap_Y; f < top2_Alam_Y; f += top2_Alam_grid_gap_Y){
+      context.moveTo(0, f);
+      context.lineTo(top2_Alam_X, f);
+    }
+    context.stroke();
+
+    //bikin side bar chart
+    for(var i = 0; i < data_top2.length; i++){
+      if(data_top[i][1] < min_death)
+        var death_data = (data_top2[i][1] / (min_death / 2) + 1) * min_death / 3;
+      else
+        var death_data = data_top2[i][1];
+      context.save();
+      context.fillStyle = gradH3; 
+      context.fillRect(0, top2_Alam_grid_gap_Y * (data_top2.length - i) - top2_Alam_grid_gap_Y/4, ((Math.log(death_data/min_death)/Math.log(3)) + 1) / (total_death.length + 1) * top2_Alam_X, top2_Alam_grid_gap_Y/2);
+      context.restore();
+    }
+
+    //reset position
+    context.translate(-top2_Alam_left_gap, height-top2_Alam_bot_gap);
+    context.scale(1, -1);
+  }
        
-   function linechart(){
-    //line chart
+  function linechart(){
+//line chart
     //create label di sumbu x dan y
     context.save();
     context.fillStyle = 'black';
@@ -637,7 +656,7 @@ const sketch = () => {
     context.fillStyle = 'black';
     context.font = "30px Arial";
     context.textAlign = 'center';
-    context.fillText("Jumlah kematian (ribu)", 0, -55);
+    context.fillText("Jumlah kematian", 0, -95);
     context.restore();
 
     //keterangan sumbu x
@@ -701,44 +720,63 @@ const sketch = () => {
 
     //bikin line chart
     context.lineWidth = line_grid_gap_X / 25;
-    for(var i = 0; i < tahun.length; i++){
+    for(var i = 0; i < tahun.length-1; i++){
+
+      if(tahun[i][1] < min_death)
+        var death_data = (tahun[i][1] / (min_death / 2) + 1) * min_death / 3;
+      else
+        var death_data = tahun[i][1];
+      if(tahun[i+1][1] < min_death)
+        var death_data1 = (tahun[i+1][1] / (min_death / 2) + 1) * min_death / 3;
+      else
+        var death_data1 = tahun[i+1][1];
       context.save();
       context.beginPath();
       context.strokeStyle = gradR1; //Bencana Alam
-      context.moveTo(line_grid_gap_X*(i+1), tahun[i][1] / maks_death * line_Y);
-      context.lineTo(line_grid_gap_X*(i+2), tahun[i+1][1] / maks_death * line_Y);
+      context.moveTo(line_grid_gap_X*(i+1), ((Math.log(death_data/min_death)/Math.log(3)) + 1) / (total_death.length + 1)* line_Y);
+      context.lineTo(line_grid_gap_X*(i+2), ((Math.log(death_data1/min_death)/Math.log(3)) + 1) / (total_death.length + 1)* line_Y);
       context.stroke();
       context.restore();
 
+      if(tahun[i][2] < min_death)
+        var death_data = (tahun[i][2] / (min_death / 2) + 1) * min_death / 3;
+      else
+        var death_data = tahun[i][2];
+      if(tahun[i+1][2] < min_death)
+        var death_data1 = (tahun[i+1][2] / (min_death / 2) + 1) * min_death / 3;
+      else
+        var death_data1 = tahun[i+1][2];
       context.save();
       context.beginPath();
       context.strokeStyle = gradR2; //Bencana Non Alam
-      context.moveTo(line_grid_gap_X*(i+1), tahun[i][2] / maks_death * line_Y);
-      context.lineTo(line_grid_gap_X*(i+2), tahun[i+1][2] / maks_death * line_Y);
+      context.moveTo(line_grid_gap_X*(i+1), ((Math.log(death_data/min_death)/Math.log(3)) + 1) / (total_death.length + 1)* line_Y);
+      context.lineTo(line_grid_gap_X*(i+2), ((Math.log(death_data1/min_death)/Math.log(3)) + 1) / (total_death.length + 1)* line_Y);
       context.stroke();
       context.restore();
 
+      if(tahun[i][3] < min_death)
+        var death_data = (tahun[i][3] / (min_death / 2) + 1) * min_death / 3;
+      else
+        var death_data = tahun[i][3];
+      if(tahun[i+1][3] < min_death)
+        var death_data1 = (tahun[i+1][3] / (min_death / 2) + 1) * min_death / 3;
+      else
+        var death_data1 = tahun[i+1][3];
       context.save();
       context.beginPath();
       context.strokeStyle = gradR3; //Bencana Sosial
-      context.moveTo(line_grid_gap_X*(i+1), tahun[i][3] / maks_death * line_Y);
-      context.lineTo(line_grid_gap_X*(i+2), tahun[i+1][3] / maks_death * line_Y);
+      context.moveTo(line_grid_gap_X*(i+1), ((Math.log(death_data/min_death)/Math.log(3)) + 1) / (total_death.length + 1)* line_Y);
+      context.lineTo(line_grid_gap_X*(i+2), ((Math.log(death_data1/min_death)/Math.log(3)) + 1) / (total_death.length + 1)* line_Y);
       context.stroke();
       context.restore();
     }
-   }
-   barchart();
-   topchart0();
-   topchart1();
-   topchart2();
-   linechart();
-
-
+  }
   
-
-    
-
-  
+    barchart();
+    topchart0();
+    topchart1();
+    topchart2();
+    linechart();
 
   };
 };
