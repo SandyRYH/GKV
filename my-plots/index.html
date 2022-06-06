@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
     <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <title>GKV</title>
 </head>
 <body>
+    <!-- Barchart -->
     <div id="barplot"></div>
     <script> 
         BAR = document.getElementById('barplot');
@@ -56,9 +58,130 @@
             },
         };
 
-        Plotly.newPlot('barplot', data, layout);
+                    Plotly.newPlot('barplot', data, layout);
+    </script>
+    <!-- End of Barchart -->
+    
+    <!-- Linechart !-->
+    <div id="lineplot"></div>
+    <script>
+        LINESCATTER = document.getElementById('lineplot')
+
+        var trace1 = {
+        x: ['2010-2011', '2012-2013', '2014-2015', '2016-2017', '2018-2019', '2020-2021'],
+        y: [1478, 174, 215, 611, 4091, 236],
+        name: 'Alam',
+        type: 'scatter',
+        mode: 'lines',
+        line: {
+            color: 'rgb(219, 64, 82)',
+            width: 3
+        }
+        };
+
+        var trace2 = {
+        x: ['2010-2011', '2012-2013', '2014-2015', '2016-2017', '2018-2019', '2020-2021'],
+        y: [51776, 4451, 5038, 4208, 16190, 159779],
+        name: 'Non-Alam',
+        type: 'scatter',
+        mode: 'lines'
+        };
+
+        var trace3 = {
+        x: ['2010-2011', '2012-2013', '2014-2015', '2016-2017', '2018-2019', '2020-2021'],
+        y: [67, 65, 45, 26, 32, 4],
+        name: 'Sosial',
+        type: 'scatter',
+        mode: 'lines'
+        };
+        
+        var data = [trace1, trace2, trace3];
+
+        var layout = {
+            barmode: 'group',
+            title:  'Judul data',
+            xaxis: {
+                title: 'Tahun',
+                titlefont: {
+                    family: 'Arial, sans-serif',
+                    size: 18,
+                    color: 'lightgrey'
+                },
+            },
+            yaxis: {
+                title: 'Jumlah Kematian',
+                titlefont: {
+                family: 'Arial, sans-serif',
+                size: 18,
+                color: 'lightgrey'
+                },
+            },
+        };
+
+        Plotly.newPlot('lineplot', data, layout);
 
     </script>
+    `<!-- End of Linechart -->
+
+    <!-- Barchart Horizontal 1 -->
+    <div id="barhorizontal1"></div>
+    <script>
+        BAR = document.getElementById('barhorizontal1');
+        //Data pada plot untuk absis-x, dan ordinat-y
+        var data = [{
+        type: 'bar',
+        x: [6213, 10638, 25167, 29952, 144094],
+        y: ['Rabies', 'Demam Berdarah (DBD)', 'Tuberkolosis', 'Kecelakaan Lalu Lintas', 'Covid-19'],
+        orientation: 'h'
+        }];
+
+        var layout = {
+            title:  'Bencana Non-Alam/Penyakit',
+        };
+
+        Plotly.newPlot('barhorizontal1', data);
+    </script>
+    <!-- End of Barchart Horizontal 1 -->
+
+    <!-- Barchart Horizontal 2 -->
+    <div id="barhorizontal2"></div>
+    <script>
+        BAR = document.getElementById('barhorizontal2');
+        //Data pada plot untuk absis-x, dan ordinat-y
+        var data = [{
+        type: 'bar',
+        x: [465, 939, 1228, 3557, 3895],
+        y: ['Gunung Meletus', 'Longsor', 'Banjir', 'Tsunami', 'Gempa'],
+        orientation: 'h'
+        }];
+
+        var layout = {
+            title:  'Bencana Alam',
+        };
+
+        Plotly.newPlot('barhorizontal2', data);
+    </script>
+    <!-- End of Barchart Horizontal 2 -->
+
+    <!-- Barchart Horizontal 3 -->
+    <div id="barhorizontal3"></div>
+    <script>
+        BAR = document.getElementById('barhorizontal3');
+        //Data pada plot untuk absis-x, dan ordinat-y
+        var data = [{
+        type: 'bar',
+        x: [38, 201],
+        y: ['Terorisme', 'Konflik Sosial'],
+        orientation: 'h'
+        }];
+
+        var layout = {
+            title:  'Bencana Alam',
+        };
+
+        Plotly.newPlot('barhorizontal3', data);
+    </script>
+    <!-- End of Barchart Horizontal 3 -->
     
 </body>
 </html>
