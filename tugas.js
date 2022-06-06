@@ -62,7 +62,7 @@ const bot_gap = 1110;
 const left_gap = 160;
 
 const line_bot_gap = 1110;
-const line_left_gap = 1560;
+const line_left_gap = 2160;
 
 const top_Alam_bot_gap = 110;
 const top_Alam_left_gap = 220;
@@ -73,6 +73,7 @@ const top1_Alam_left_gap = 1620;
 const top2_Alam_bot_gap = 110;
 const top2_Alam_left_gap = 3120;
 
+// jarak antar grid
 const grid_gap_X = maks_X / (tahun.length + 1);
 const grid_gap_Y = maks_Y / (total_death.length + 1);
 
@@ -88,7 +89,8 @@ const top1_Alam_grid_gap_Y = top1_Alam_Y / (data_top1.length + 1);
 const top2_Alam_grid_gap_X = top2_Alam_X / (total_death.length + 1);
 const top2_Alam_grid_gap_Y = top2_Alam_Y / (data_top2.length + 1);
 
-
+// jarak titik control point bezier
+const curve_gap = 100;
 
 // //nyimpen data[jumlah kematian] di tahun
 // for(var i = 0; i < data.length; i++){
@@ -244,7 +246,7 @@ const top2_Alam_grid_gap_Y = top2_Alam_Y / (data_top2.length + 1);
 const sketch = () => {
   return ({ context, width, height }) => {
     //white background belakang
-    context.fillStyle = 'white';
+    context.fillStyle = '#12111c';
     context.fillRect(0, 0, width, height);
     
    //BUAT HORIZONTAL
@@ -299,9 +301,29 @@ const sketch = () => {
       
   function barchart(){
 //bar chart
+    //square bracket round edges
+    function squareBracket_bar(l_gap, b_gap, X, Y, left, right, bot, top){
+      context.save();
+      context.fillStyle = '#323140';
+      context.beginPath();
+      context.moveTo(l_gap - left + curve_gap, height - (b_gap - bot));
+      context.lineTo(l_gap + X + right - curve_gap, height - (b_gap - bot));
+      context.quadraticCurveTo(l_gap + X + right, height - (b_gap - bot), l_gap + X + right, height - (b_gap - bot + curve_gap));
+      context.lineTo(l_gap + X + right, height - (b_gap + top + Y - curve_gap));
+      context.quadraticCurveTo(l_gap + X + right, height - (b_gap + top + Y), l_gap + X + right - curve_gap, height - (b_gap + top + Y));
+      context.lineTo(l_gap - left + curve_gap, height - (b_gap + top + Y));
+      context.quadraticCurveTo(l_gap - left, height - (b_gap + top + Y), l_gap - left, height - (b_gap + top + Y - curve_gap));
+      context.lineTo(l_gap - left, height - (b_gap - bot + curve_gap));
+      context.quadraticCurveTo(l_gap - left, height - (b_gap - bot), l_gap - left + curve_gap, height - (b_gap - bot));
+      context.closePath();
+      context.fill();
+      context.restore();
+    }
+    squareBracket_bar(left_gap, bot_gap, maks_X, maks_Y, 135, 240, 95, 20);
+
     //create label di sumbu x dan y
     context.save();
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "20px Arial";
     context.textAlign = 'right';
     for(var n = 0; n < total_death.length; n++){
@@ -322,7 +344,7 @@ const sketch = () => {
     context.scale(1, -1);
     context.translate(0, -1 * maks_Y / 2);
     context.rotate(-90 * Math.PI / 180);
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "30px Arial";
     context.textAlign = 'center';
     context.fillText("Jumlah kematian", 0, -95);
@@ -333,13 +355,15 @@ const sketch = () => {
     context.scale(1, -1);
     context.translate(maks_X / 2, 0);
     context.rotate(-0 * Math.PI / 180);
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "30px Arial";
     context.textAlign = 'center';
     context.fillText("Tahun", 0, 75);
     context.restore();
 
     //bikin grid
+    context.save();
+    context.strokeStyle = 'snow';
     context.beginPath();  //garis di sumbu 0 x & y
     context.lineWidth = 1;
     context.moveTo(0, 0);
@@ -358,6 +382,7 @@ const sketch = () => {
       context.lineTo(maks_X, f);
     }
     context.stroke();
+    context.restore();
 
     //bikin bar chart
     var bar_width = grid_gap_X / 4;
@@ -396,7 +421,7 @@ const sketch = () => {
     context.save();
     context.fillStyle = gradV1;
     context.fillRect(maks_X + 25, maks_Y / 2 + 23, bar_width/2, bar_width/2);
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "20px Arial";
     context.scale(1, -1);
     context.fillText("Bencana Alam", maks_X + 50, (maks_Y / 2 + 25) * -1);
@@ -405,7 +430,7 @@ const sketch = () => {
     context.save();
     context.fillStyle = gradV2;
     context.fillRect(maks_X + 25, maks_Y / 2 - 2, bar_width/2, bar_width/2);
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "20px Arial";
     context.scale(1, -1);
     context.fillText("Bencana Non Alam", maks_X + 50, (maks_Y / 2) * -1);
@@ -414,7 +439,7 @@ const sketch = () => {
     context.save();
     context.fillStyle = gradV3;
     context.fillRect(maks_X + 25, maks_Y / 2 - 27, bar_width/2, bar_width/2);
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "20px Arial";
     context.scale(1, -1);
     context.fillText("Bencana Sosial", maks_X + 50, (maks_Y / 2 - 25) * -1);
@@ -427,9 +452,29 @@ const sketch = () => {
   
   function topchart0(){
 //Top 5 Bencana Alam Side bar chart
+    //square bracket round edges
+    function squareBracket_top0(l_gap, b_gap, X, Y, left, right, bot, top){
+      context.save();
+      context.fillStyle = '#323140';
+      context.beginPath();
+      context.moveTo(l_gap - left + curve_gap, height - (b_gap - bot));
+      context.lineTo(l_gap + X + right - curve_gap, height - (b_gap - bot));
+      context.quadraticCurveTo(l_gap + X + right, height - (b_gap - bot), l_gap + X + right, height - (b_gap - bot + curve_gap));
+      context.lineTo(l_gap + X + right, height - (b_gap + top + Y - curve_gap));
+      context.quadraticCurveTo(l_gap + X + right, height - (b_gap + top + Y), l_gap + X + right - curve_gap, height - (b_gap + top + Y));
+      context.lineTo(l_gap - left + curve_gap, height - (b_gap + top + Y));
+      context.quadraticCurveTo(l_gap - left, height - (b_gap + top + Y), l_gap - left, height - (b_gap + top + Y - curve_gap));
+      context.lineTo(l_gap - left, height - (b_gap - bot + curve_gap));
+      context.quadraticCurveTo(l_gap - left, height - (b_gap - bot), l_gap - left + curve_gap, height - (b_gap - bot));
+      context.closePath();
+      context.fill();
+      context.restore();
+    }
+    squareBracket_top0(top_Alam_left_gap, top_Alam_bot_gap, top_Alam_X, top_Alam_Y, 195, 50, 95, 20);
+
     //create label di sumbu x
     context.save();
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "20px Arial";
     context.textAlign = 'right';
     for(var n = 0; n < data_top.length; n++){
@@ -450,13 +495,15 @@ const sketch = () => {
     context.scale(1, -1);
     context.translate(top_Alam_X / 2, 0);
     context.rotate(-0 * Math.PI / 180);
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "30px Arial";
     context.textAlign = 'center';
     context.fillText("Jumlah kematian", 0, 75);
     context.restore();
 
     //bikin grid
+    context.save();
+    context.strokeStyle = 'snow';
     context.beginPath();  //garis di sumbu 0 x & y
     context.lineWidth = 1;
     context.moveTo(0, 0);
@@ -475,6 +522,7 @@ const sketch = () => {
       context.lineTo(top_Alam_X, f);
     }
     context.stroke();
+    context.restore();
 
     //bikin side bar chart
     for(var i = 0; i < data_top.length; i++){
@@ -495,9 +543,29 @@ const sketch = () => {
 
   function topchart1(){
 //Top 5 Bencana Alam Side bar chart
+    //square bracket round edges
+    function squareBracket_top1(l_gap, b_gap, X, Y, left, right, bot, top){
+      context.save();
+      context.fillStyle = '#323140';
+      context.beginPath();
+      context.moveTo(l_gap - left + curve_gap, height - (b_gap - bot));
+      context.lineTo(l_gap + X + right - curve_gap, height - (b_gap - bot));
+      context.quadraticCurveTo(l_gap + X + right, height - (b_gap - bot), l_gap + X + right, height - (b_gap - bot + curve_gap));
+      context.lineTo(l_gap + X + right, height - (b_gap + top + Y - curve_gap));
+      context.quadraticCurveTo(l_gap + X + right, height - (b_gap + top + Y), l_gap + X + right - curve_gap, height - (b_gap + top + Y));
+      context.lineTo(l_gap - left + curve_gap, height - (b_gap + top + Y));
+      context.quadraticCurveTo(l_gap - left, height - (b_gap + top + Y), l_gap - left, height - (b_gap + top + Y - curve_gap));
+      context.lineTo(l_gap - left, height - (b_gap - bot + curve_gap));
+      context.quadraticCurveTo(l_gap - left, height - (b_gap - bot), l_gap - left + curve_gap, height - (b_gap - bot));
+      context.closePath();
+      context.fill();
+      context.restore();
+    }
+    squareBracket_top1(top1_Alam_left_gap, top1_Alam_bot_gap, top1_Alam_X, top1_Alam_Y, 255, 50, 95, 20);
+
     //create label di sumbu x
     context.save();
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "20px Arial";
     context.textAlign = 'right';
     for(var n = 0; n < data_top1.length; n++){
@@ -518,13 +586,15 @@ const sketch = () => {
     context.scale(1, -1);
     context.translate(top1_Alam_X / 2, 0);
     context.rotate(-0 * Math.PI / 180);
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "30px Arial";
     context.textAlign = 'center';
     context.fillText("Jumlah kematian", 0, 75);
     context.restore();
 
     //bikin grid
+    context.save();
+    context.strokeStyle = 'snow';
     context.beginPath();  //garis di sumbu 0 x & y
     context.lineWidth = 1;
     context.moveTo(0, 0);
@@ -543,6 +613,7 @@ const sketch = () => {
       context.lineTo(top1_Alam_X, f);
     }
     context.stroke();
+    context.restore();
 
     //bikin side bar chart
     for(var i = 0; i < data_top1.length; i++){
@@ -563,9 +634,29 @@ const sketch = () => {
 
   function topchart2(){
 //Top 5 Bencana Alam Side bar chart
+    //square bracket round edges
+    function squareBracket_top2(l_gap, b_gap, X, Y, left, right, bot, top){
+      context.save();
+      context.fillStyle = '#323140';
+      context.beginPath();
+      context.moveTo(l_gap - left + curve_gap, height - (b_gap - bot));
+      context.lineTo(l_gap + X + right - curve_gap, height - (b_gap - bot));
+      context.quadraticCurveTo(l_gap + X + right, height - (b_gap - bot), l_gap + X + right, height - (b_gap - bot + curve_gap));
+      context.lineTo(l_gap + X + right, height - (b_gap + top + Y - curve_gap));
+      context.quadraticCurveTo(l_gap + X + right, height - (b_gap + top + Y), l_gap + X + right - curve_gap, height - (b_gap + top + Y));
+      context.lineTo(l_gap - left + curve_gap, height - (b_gap + top + Y));
+      context.quadraticCurveTo(l_gap - left, height - (b_gap + top + Y), l_gap - left, height - (b_gap + top + Y - curve_gap));
+      context.lineTo(l_gap - left, height - (b_gap - bot + curve_gap));
+      context.quadraticCurveTo(l_gap - left, height - (b_gap - bot), l_gap - left + curve_gap, height - (b_gap - bot));
+      context.closePath();
+      context.fill();
+      context.restore();
+    }
+    squareBracket_top2(top2_Alam_left_gap, top2_Alam_bot_gap, top2_Alam_X, top2_Alam_Y, 165, 50, 95, 20);
+
     //create label di sumbu x
     context.save();
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "20px Arial";
     context.textAlign = 'right';
     for(var n = 0; n < data_top2.length; n++){
@@ -586,13 +677,15 @@ const sketch = () => {
     context.scale(1, -1);
     context.translate(top2_Alam_X / 2, 0);
     context.rotate(-0 * Math.PI / 180);
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "30px Arial";
     context.textAlign = 'center';
     context.fillText("Jumlah kematian", 0, 75);
     context.restore();
 
     //bikin grid
+    context.save();
+    context.strokeStyle ='snow';
     context.beginPath();  //garis di sumbu 0 x & y
     context.lineWidth = 1;
     context.moveTo(0, 0);
@@ -611,6 +704,7 @@ const sketch = () => {
       context.lineTo(top2_Alam_X, f);
     }
     context.stroke();
+    context.restore();
 
     //bikin side bar chart
     for(var i = 0; i < data_top2.length; i++){
@@ -631,9 +725,29 @@ const sketch = () => {
        
   function linechart(){
 //line chart
+    //square bracket round edges
+    function squareBracket_line(l_gap, b_gap, X, Y, left, right, bot, top){
+      context.save();
+      context.fillStyle = '#323140';
+      context.beginPath();
+      context.moveTo(l_gap - left + curve_gap, height - (b_gap - bot));
+      context.lineTo(l_gap + X + right - curve_gap, height - (b_gap - bot));
+      context.quadraticCurveTo(l_gap + X + right, height - (b_gap - bot), l_gap + X + right, height - (b_gap - bot + curve_gap));
+      context.lineTo(l_gap + X + right, height - (b_gap + top + Y - curve_gap));
+      context.quadraticCurveTo(l_gap + X + right, height - (b_gap + top + Y), l_gap + X + right - curve_gap, height - (b_gap + top + Y));
+      context.lineTo(l_gap - left + curve_gap, height - (b_gap + top + Y));
+      context.quadraticCurveTo(l_gap - left, height - (b_gap + top + Y), l_gap - left, height - (b_gap + top + Y - curve_gap));
+      context.lineTo(l_gap - left, height - (b_gap - bot + curve_gap));
+      context.quadraticCurveTo(l_gap - left, height - (b_gap - bot), l_gap - left + curve_gap, height - (b_gap - bot));
+      context.closePath();
+      context.fill();
+      context.restore();
+    }
+    squareBracket_line(line_left_gap, line_bot_gap, line_X, line_Y, 135, 240, 95, 20);
+
     //create label di sumbu x dan y
     context.save();
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "20px Arial";
     context.textAlign = 'right';
     for(var n = 0; n < total_death.length; n++){
@@ -653,7 +767,7 @@ const sketch = () => {
     context.scale(1, -1);
     context.translate(0, -1 * line_Y / 2);
     context.rotate(-90 * Math.PI / 180);
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "30px Arial";
     context.textAlign = 'center';
     context.fillText("Jumlah kematian", 0, -95);
@@ -664,13 +778,15 @@ const sketch = () => {
     context.scale(1, -1);
     context.translate(line_X / 2, 0);
     context.rotate(-0 * Math.PI / 180);
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "30px Arial";
     context.textAlign = 'center';
     context.fillText("Tahun", 0, 75);
     context.restore();
 
     //bikin grid
+    context.save();
+    context.strokeStyle = 'snow';
     context.beginPath();  //garis di sumbu 0 x & y
     context.lineWidth = 1;
     context.moveTo(0, 0);
@@ -689,12 +805,13 @@ const sketch = () => {
       context.lineTo(line_X, f);
     }
     context.stroke();
+    context.restore();
 
     //keterangan warna line
     context.save();
     context.fillStyle = gradR1;
     context.fillRect(line_X + 25, line_Y / 2 + 29, line_grid_gap_X/8, line_grid_gap_X/25);
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "20px Arial";
     context.scale(1, -1);
     context.fillText("Bencana Alam", line_X + 50, (line_Y / 2 + 25) * -1);
@@ -703,7 +820,7 @@ const sketch = () => {
     context.save();
     context.fillStyle = gradR2;
     context.fillRect(line_X + 25, line_Y / 2 + 4, line_grid_gap_X/8, line_grid_gap_X/25);
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "20px Arial";
     context.scale(1, -1);
     context.fillText("Bencana Non Alam", line_X + 50, (line_Y / 2) * -1);
@@ -712,7 +829,7 @@ const sketch = () => {
     context.save();
     context.fillStyle = gradR3;
     context.fillRect(line_X + 25, line_Y / 2 - 21, line_grid_gap_X/8, line_grid_gap_X/25);
-    context.fillStyle = 'black';
+    context.fillStyle = 'snow';
     context.font = "20px Arial";
     context.scale(1, -1);
     context.fillText("Bencana Sosial", line_X + 50, (line_Y / 2 - 25) * -1);
