@@ -1,7 +1,7 @@
 const canvasSketch = require('canvas-sketch');
 
 const settings = {
-  dimensions: [4200, 2000]
+  dimensions: [4800, 3000]
 };
 
 const total_death = ["50", "150", "450", "1350", "4050", "12150", "36450", "109350"];
@@ -58,20 +58,20 @@ const top2_Alam_X = 1000;
 const top2_Alam_Y = 800;
 
 //jarak chart dengan bg belakang
-const bot_gap = 1110;
-const left_gap = 160;
+const bot_gap = 1610;
+const left_gap = 1060;
 
-const line_bot_gap = 1110;
-const line_left_gap = 2160;
+const line_bot_gap = 1610;
+const line_left_gap = 2560;
 
-const top_Alam_bot_gap = 110;
-const top_Alam_left_gap = 220;
+const top_Alam_bot_gap = 310;
+const top_Alam_left_gap = 500;
 
-const top1_Alam_bot_gap = 110;
-const top1_Alam_left_gap = 1620;
+const top1_Alam_bot_gap = 310;
+const top1_Alam_left_gap = 2000;
 
-const top2_Alam_bot_gap = 110;
-const top2_Alam_left_gap = 3120;
+const top2_Alam_bot_gap = 310;
+const top2_Alam_left_gap = 3400;
 
 // jarak antar grid
 const grid_gap_X = maks_X / (tahun.length + 1);
