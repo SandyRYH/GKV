@@ -1,7 +1,7 @@
 const canvasSketch = require('canvas-sketch');
 
 const settings = {
-  dimensions: [4800, 3000]
+  dimensions: [4800, 2500]
 };
 
 const total_death = ["50", "150", "450", "1350", "4050", "12150", "36450", "109350"];
@@ -58,19 +58,19 @@ const top2_Alam_X = 1000;
 const top2_Alam_Y = 800;
 
 //jarak chart dengan bg belakang
-const bot_gap = 1610;
+const bot_gap = 1300;
 const left_gap = 1060;
 
-const line_bot_gap = 1610;
+const line_bot_gap = 1300;
 const line_left_gap = 2560;
 
-const top_Alam_bot_gap = 310;
+const top_Alam_bot_gap = 160;
 const top_Alam_left_gap = 500;
 
-const top1_Alam_bot_gap = 310;
+const top1_Alam_bot_gap = 160;
 const top1_Alam_left_gap = 2000;
 
-const top2_Alam_bot_gap = 310;
+const top2_Alam_bot_gap = 160;
 const top2_Alam_left_gap = 3400;
 
 // jarak antar grid
@@ -248,6 +248,30 @@ const sketch = () => {
     //white background belakang
     context.fillStyle = '#12111c';
     context.fillRect(0, 0, width, height);
+    //Bikin Text
+    function isitext(){
+      context.save();
+      context.beginPath();
+      context.fillStyle = 'snow';
+      context.strokeStyle = 'snow';
+      context.font = "100px Arial";
+      context.fillText('Jumlah dan Penyebab Kematian di Indonesia', 300, 170)
+      context.strokeText("Jumlah dan Penyebab Kematian di Indonesia", 299, 170)
+      context.closePath();
+
+      context.beginPath();
+      context.fillStyle = 'snow';
+      context.font = "50px Arial";
+      context.fillText('Jumlah Kematian di Indonesia Berdasarkan Penyebabnya', 300, 340)
+      context.closePath();
+
+      context.beginPath();
+      context.fillStyle = 'snow';
+      context.font = "50px Arial";
+      context.fillText('Top 5 Penyebab Tertinggi Kematian di Indonesia', 300, 1480)
+      context.closePath();
+    }
+
     
    //BUAT HORIZONTAL
     //Color pallete 1 (buat bencana alam) merah -> gradH1
@@ -324,7 +348,7 @@ const sketch = () => {
     //create label di sumbu x dan y
     context.save();
     context.fillStyle = 'snow';
-    context.font = "20px Arial";
+    context.font = "23px Arial";
     context.textAlign = 'right';
     for(var n = 0; n < total_death.length; n++){
       context.fillText(total_death[n], left_gap-10, height-bot_gap+8 - (n + 1)*grid_gap_Y);
@@ -748,7 +772,7 @@ const sketch = () => {
     //create label di sumbu x dan y
     context.save();
     context.fillStyle = 'snow';
-    context.font = "20px Arial";
+    context.font = "23px Arial";
     context.textAlign = 'right';
     for(var n = 0; n < total_death.length; n++){
       context.fillText(total_death[n], line_left_gap-10, height-line_bot_gap+8 - (n + 1)*line_grid_gap_Y);
@@ -888,7 +912,7 @@ const sketch = () => {
       context.restore();
     }
   }
-  
+    isitext();
     barchart();
     topchart0();
     topchart1();
