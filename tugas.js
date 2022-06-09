@@ -49,19 +49,19 @@ const line_X = 1000;
 const line_Y = 800;
 
 const top_Alam_X = 1000;
-const top_Alam_Y = 800;
+const top_Alam_Y = 700;
 
 const top1_Alam_X = 1000;
-const top1_Alam_Y = 800;
+const top1_Alam_Y = 700;
 
 const top2_Alam_X = 1000;
-const top2_Alam_Y = 800;
+const top2_Alam_Y = 700;
 
 //jarak chart dengan bg belakang
-const bot_gap = 1300;
+const bot_gap = 1260;
 const left_gap = 1060;
 
-const line_bot_gap = 1300;
+const line_bot_gap = 1260;
 const line_left_gap = 2560;
 
 const top_Alam_bot_gap = 160;
@@ -246,8 +246,9 @@ const curve_gap = 100;
 const sketch = () => {
   return ({ context, width, height }) => {
     //white background belakang
-    context.fillStyle = '#12111c';
+    context.fillStyle = '#0f111e';
     context.fillRect(0, 0, width, height);
+
     //Bikin Text
     function isitext(){
       context.save();
@@ -322,13 +323,18 @@ const sketch = () => {
     gradR3.addColorStop(0, "#5485ff");
     gradR3.addColorStop(1, "#91f8ff");
 
-      
+    //#262835  #323140
+    //#121622  #15181f
+
   function barchart(){
 //bar chart
     //square bracket round edges
     function squareBracket_bar(l_gap, b_gap, X, Y, left, right, bot, top){
       context.save();
-      context.fillStyle = '#323140';
+      var gradSB = context.createLinearGradient(l_gap - left, height - (b_gap + top + Y),l_gap + X + right, height - (b_gap - bot));
+      gradSB.addColorStop(0, "#262835");
+      gradSB.addColorStop(1, "#121622");
+      context.fillStyle = gradSB;
       context.beginPath();
       context.moveTo(l_gap - left + curve_gap, height - (b_gap - bot));
       context.lineTo(l_gap + X + right - curve_gap, height - (b_gap - bot));
@@ -479,7 +485,10 @@ const sketch = () => {
     //square bracket round edges
     function squareBracket_top0(l_gap, b_gap, X, Y, left, right, bot, top){
       context.save();
-      context.fillStyle = '#323140';
+      var gradSB = context.createLinearGradient(l_gap - left, height - (b_gap + top + Y),l_gap + X + right, height - (b_gap - bot));
+      gradSB.addColorStop(0, "#262835");
+      gradSB.addColorStop(1, "#121622");
+      context.fillStyle = gradSB;
       context.beginPath();
       context.moveTo(l_gap - left + curve_gap, height - (b_gap - bot));
       context.lineTo(l_gap + X + right - curve_gap, height - (b_gap - bot));
@@ -494,7 +503,15 @@ const sketch = () => {
       context.fill();
       context.restore();
     }
-    squareBracket_top0(top_Alam_left_gap, top_Alam_bot_gap, top_Alam_X, top_Alam_Y, 195, 50, 95, 20);
+    squareBracket_top0(top_Alam_left_gap, top_Alam_bot_gap, top_Alam_X, top_Alam_Y, 195, 50, 95, 70);
+
+     //Judul chart
+     context.save();
+     context.fillStyle = 'snow';
+     context.font = "40px Arial";
+     context.textAlign = 'center';
+     context.fillText("Bencana Alam", top_Alam_left_gap + (50 - 195 + top_Alam_X)/2, height - (top_Alam_bot_gap + top_Alam_Y + 20));
+     context.restore();
 
     //create label di sumbu x
     context.save();
@@ -570,7 +587,10 @@ const sketch = () => {
     //square bracket round edges
     function squareBracket_top1(l_gap, b_gap, X, Y, left, right, bot, top){
       context.save();
-      context.fillStyle = '#323140';
+      var gradSB = context.createLinearGradient(l_gap - left, height - (b_gap + top + Y),l_gap + X + right, height - (b_gap - bot));
+      gradSB.addColorStop(0, "#262835");
+      gradSB.addColorStop(1, "#121622");
+      context.fillStyle = gradSB;
       context.beginPath();
       context.moveTo(l_gap - left + curve_gap, height - (b_gap - bot));
       context.lineTo(l_gap + X + right - curve_gap, height - (b_gap - bot));
@@ -585,7 +605,15 @@ const sketch = () => {
       context.fill();
       context.restore();
     }
-    squareBracket_top1(top1_Alam_left_gap, top1_Alam_bot_gap, top1_Alam_X, top1_Alam_Y, 255, 50, 95, 20);
+    squareBracket_top1(top1_Alam_left_gap, top1_Alam_bot_gap, top1_Alam_X, top1_Alam_Y, 255, 50, 95, 70);
+
+    //Judul chart
+    context.save();
+    context.fillStyle = 'snow';
+    context.font = "40px Arial";
+    context.textAlign = 'center';
+    context.fillText("Bencana Non Alam", top1_Alam_left_gap + (50 - 255 + top1_Alam_X)/2, height - (top1_Alam_bot_gap + top1_Alam_Y + 20));
+    context.restore();
 
     //create label di sumbu x
     context.save();
@@ -661,7 +689,10 @@ const sketch = () => {
     //square bracket round edges
     function squareBracket_top2(l_gap, b_gap, X, Y, left, right, bot, top){
       context.save();
-      context.fillStyle = '#323140';
+      var gradSB = context.createLinearGradient(l_gap - left, height - (b_gap + top + Y),l_gap + X + right, height - (b_gap - bot));
+      gradSB.addColorStop(0, "#262835");
+      gradSB.addColorStop(1, "#121622");
+      context.fillStyle = gradSB;
       context.beginPath();
       context.moveTo(l_gap - left + curve_gap, height - (b_gap - bot));
       context.lineTo(l_gap + X + right - curve_gap, height - (b_gap - bot));
@@ -676,7 +707,15 @@ const sketch = () => {
       context.fill();
       context.restore();
     }
-    squareBracket_top2(top2_Alam_left_gap, top2_Alam_bot_gap, top2_Alam_X, top2_Alam_Y, 165, 50, 95, 20);
+    squareBracket_top2(top2_Alam_left_gap, top2_Alam_bot_gap, top2_Alam_X, top2_Alam_Y, 165, 50, 95, 70);
+
+    //Judul chart
+    context.save();
+    context.fillStyle = 'snow';
+    context.font = "40px Arial";
+    context.textAlign = 'center';
+    context.fillText("Bencana Sosial", top2_Alam_left_gap + (50 - 165 + top2_Alam_X)/2, height - (top2_Alam_bot_gap + top2_Alam_Y + 20));
+    context.restore();
 
     //create label di sumbu x
     context.save();
@@ -752,7 +791,10 @@ const sketch = () => {
     //square bracket round edges
     function squareBracket_line(l_gap, b_gap, X, Y, left, right, bot, top){
       context.save();
-      context.fillStyle = '#323140';
+      var gradSB = context.createLinearGradient(l_gap - left, height - (b_gap + top + Y),l_gap + X + right, height - (b_gap - bot));
+      gradSB.addColorStop(0, "#262835");
+      gradSB.addColorStop(1, "#121622");
+      context.fillStyle = gradSB;
       context.beginPath();
       context.moveTo(l_gap - left + curve_gap, height - (b_gap - bot));
       context.lineTo(l_gap + X + right - curve_gap, height - (b_gap - bot));
