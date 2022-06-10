@@ -9,13 +9,14 @@
     <title>GKV</title>
     
     <style>
+
         body {background-color: #0f111e;}
     </style>
 
 </head>
 <body>
     <div class="container d-flex">
-        <h2 class="text-light pt-3">Jumlah dan Penyebab Kematian di Indonesia</h1>
+        <h2 style="font-family: 'Quicksand'" class="text-light pt-3">Jumlah dan Penyebab Kematian di Indonesia</h1>
     </div>
     <div class="container mt-4">
     <h5 class="text-light">Jumlah Kematian di Indonesia Berdasarkan Penyebabnya</h3>
@@ -23,9 +24,10 @@
         <div class="row mt-3 mb-3">
             <div class="col">
                 <!-- Barchart -->
-                <div id="barplot"></div>
+                <div style= "border: 8px solid #1c1e2b;" id="barplot"></div>
                 <script> 
-                    BAR = document.getElementById('barplot');
+                    var BAR = document.getElementById('barplot');
+                    BAR.style.borderRadius = "20px";
                     //Data pada plot untuk absis-x, dan ordinat-y
                     var trace1 = {
                     x: ['2010-2011', '2012-2013', '2014-2015', '2016-2017', '2018-2019', '2020-2021'],
@@ -60,30 +62,42 @@
                     var data = [trace1, trace2, trace3];
 
                     var layout = {
-                        barmode: 'group',
-                        title:  'Judul data',
+                        barmode: 'group',     
                         xaxis: {
-                            title: 'Tahun',
+                            title: 'Tahun', 
                             titlefont: {
-                                family: 'Arial, sans-serif',
+                                family: 'Quicksand',
                                 size: 18,
                                 color: 'lightgrey'
                             },
+                            gridcolor: '#4f4f4f',
                         },
                         yaxis: {
                             title: 'Jumlah Kematian',
+                            automargin : true,
                             titlefont: {
-                            family: 'Arial, sans-serif',
+                            family: 'Quicksand',
                             size: 18,
                             color: 'lightgrey'
                             },
+                            gridcolor: '#4f4f4f',
                         },
+                        autosize: true,
                         width: 500,
                         height: 400,
+                        margin: {
+                            l: 70,
+                            r: 10,
+                            b: 80,
+                            t: 30,
+                            pad: 5
+                        },
                         paper_bgcolor: '#1c1e2b',
-                        plot_bgcolor:'#1c1e2b',
+                        plot_bgcolor:'#1c1e2b', 
                         font: {
-                            color: '#f6f4fa'
+                            size: 12.5,   
+                            family: 'Quicksand',
+                            color: '#f6f4fa',   
                         }
                     };
 
@@ -93,9 +107,10 @@
             </div>
             <div class="col">
                 <!-- Linechart !-->
-                <div id="lineplot"></div>
+                <div style= "border: 8px solid #1c1e2b;" id="lineplot"></div>
                 <script>
                     LINESCATTER = document.getElementById('lineplot')
+                    LINESCATTER.style.borderRadius = "20px"; 
 
                     var trace1 = {
                     x: ['2010-2011', '2012-2013', '2014-2015', '2016-2017', '2018-2019', '2020-2021'],
@@ -136,32 +151,44 @@
                     var data = [trace1, trace2, trace3];
 
                     var layout = {
-                        barmode: 'group',
-                        title:  'Judul data',
+                        barmode: 'group',     
                         xaxis: {
-                            title: 'Tahun',
+                            title: 'Tahun', 
                             titlefont: {
-                                family: 'Arial, sans-serif',
+                                family: 'Quicksand',
                                 size: 18,
                                 color: 'lightgrey'
                             },
+                            gridcolor: '#4f4f4f',
                         },
                         yaxis: {
                             title: 'Jumlah Kematian',
+                            automargin : true,
                             titlefont: {
-                            family: 'Arial, sans-serif',
+                            family: 'Quicksand',
                             size: 18,
                             color: 'lightgrey'
                             },
+                            gridcolor: '#4f4f4f',
                         },
+                        autosize: true,
                         width: 500,
                         height: 400,
+                        margin: {
+                            l: 70,
+                            r: 10,
+                            b: 80,
+                            t: 30,
+                            pad: 5
+                        },
                         paper_bgcolor: '#1c1e2b',
-                        plot_bgcolor:'#1c1e2b',
+                        plot_bgcolor:'#1c1e2b', 
                         font: {
-                            color: '#f6f4fa'
+                            size: 12.9,   
+                            family: 'Quicksand',
+                            color: '#f6f4fa',   
                         }
-                    };
+                    }
 
                     Plotly.newPlot('lineplot', data, layout);
 
@@ -178,29 +205,38 @@
         <div class="row mt-3 mb-3">
             <div class="col">
             <!-- Barchart Horizontal 1 -->
-            <div id="barhorizontal1"></div>
+            <div style= "border: 8px solid #1c1e2b; margin-bottom: 30px;" id="barhorizontal1"></div>
             <script>
                 BAR = document.getElementById('barhorizontal1');
+                BAR.style.borderRadius = "20px"; 
                 //Data pada plot untuk absis-x, dan ordinat-y
                 var data = [{
                 type: 'bar',
                 x: [6213, 10638, 25167, 29952, 144094],
-                y: ['Rabies', 'Demam Berdarah (DBD)', 'Tuberkolosis', 'Kecelakaan Lalu Lintas', 'Covid-19'],
+                y: ['Rabies', 'Demam Berdarah (DBD)', 'Tuberkulosis', 'Kecelakaan Lalu Lintas', 'Covid-19'],
                 orientation: 'h',
                 marker:{
-                    color: ['#bc25e3', '#30bcdf', '#4e7eeb', '#bc25e3', '#30bcdf']
+                    color: ['#9125e3', '#e325a7', '#4e7eeb', '#bc25e3', '#30bcdf']
                 },
                 }];
 
                 var layout = {
                     title:  'Bencana Non-Alam/Penyakit',
-                    width: 350,
+                    width: 1260 ,
                     height: 300,
                     paper_bgcolor: '#1c1e2b',
                     plot_bgcolor:'#1c1e2b',
                     font: {
-                        color: '#f6f4fa'
-                    }
+                            size: 12.9,   
+                            family: 'Quicksand',
+                            color: '#f6f4fa',   
+                        },
+                    gridcolor: '#4f4f4f',
+                    margin: {
+                            l: 160,
+                            r: 40,
+                            pad: 0
+                    },
                 };
 
                 Plotly.newPlot('barhorizontal1', data, layout);
@@ -209,9 +245,10 @@
             </div>
             <div class="col">
             <!-- Barchart Horizontal 2 -->
-            <div id="barhorizontal2"></div>
+            <div style= "border: 8px solid #1c1e2b; margin-bottom: 30px;" id="barhorizontal2"></div>
             <script>
                 BAR = document.getElementById('barhorizontal2');
+                BAR.style.borderRadius = "20px";    
                 //Data pada plot untuk absis-x, dan ordinat-y
                 var data = [{
                 type: 'bar',
@@ -219,19 +256,27 @@
                 y: ['Gunung Meletus', 'Longsor', 'Banjir', 'Tsunami', 'Gempa'],
                 orientation: 'h',
                 marker:{
-                    color: ['#bc25e3', '#30bcdf', '#4e7eeb', '#bc25e3', '#30bcdf']
+                    color: ['#9125e3', '#e325a7', '#4e7eeb', '#bc25e3', '#30bcdf']
                 },
                 }];
 
                 var layout = {
                     title:  'Bencana Alam',
-                    width: 350,
+                    width: 1260 ,
                     height: 300,
                     paper_bgcolor: '#1c1e2b',
                     plot_bgcolor:'#1c1e2b',
                     font: {
-                        color: '#f6f4fa'
-                    }
+                            size: 12.9,   
+                            family: 'Quicksand',
+                            color: '#f6f4fa',   
+                        },
+                    gridcolor: '#4f4f4f',
+                    margin: {
+                            l: 160,
+                            r: 40,
+                            pad: 0
+                    },
                 };
 
                 Plotly.newPlot('barhorizontal2', data, layout);
@@ -240,9 +285,10 @@
             </div>
             <div class="col">
             <!-- Barchart Horizontal 3 -->
-            <div id="barhorizontal3"></div>
+            <div style= "border: 8px solid #1c1e2b; margin-bottom: 30px;" id="barhorizontal3"></div>
             <script>
                 BAR = document.getElementById('barhorizontal3');
+                BAR.style.borderRadius = "20px";
                 //Data pada plot untuk absis-x, dan ordinat-y
                 var data = [{
                 type: 'bar',
@@ -256,13 +302,21 @@
 
                 var layout = {
                     title:  'Bencana Sosial',
-                    width: 340,
+                    width: 1260 ,
                     height: 300,
                     paper_bgcolor: '#1c1e2b',
                     plot_bgcolor:'#1c1e2b',
                     font: {
-                        color: '#f6f4fa'
-                    }
+                            size: 12.9,   
+                            family: 'Quicksand',
+                            color: '#f6f4fa',   
+                        },
+                    gridcolor: '#4f4f4f',
+                    margin: {
+                            l: 160,
+                            r: 40,
+                            pad: 0
+                    },
                 };
 
                 Plotly.newPlot('barhorizontal3', data, layout);
